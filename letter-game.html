@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Keyboard</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #alphabet-container {
+            display: grid;
+            grid-template-columns: repeat(5, 100px); /* letters per row, letter block placement size */
+            gap: 40px; /* gap between letter blocks */
+            justify-content: center;
+            margin-bottom: 20px;
+            margin-top: 30px; /* margin at top of page */
+        }
+
+        .letter-block {
+            /* width and height of letter blocks */
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: yellow;
+            border: 1px solid black;
+        }
+
+        .greyed-out {
+            background-color: grey !important;
+        }
+
+        #reset-btn {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="alphabet-container"></div>
+    <button id="reset-btn" onclick="resetKeys()">Reset</button>
+
+    <script>
+        const alphabetContainer = document.getElementById('alphabet-container');
+        const resetButton = document.getElementById('reset-btn');
+
+        // Create letter blocks
+        for (let i = 65; i <= 90; i++) {
+            const letter = String.fromCharCode(i);
+            const letterBlock = document.createElement('div');
+            letterBlock.classList.add('letter-block');
+            letterBlock.innerText = letter;
+            letterBlock.setAttribute('data-letter', letter);
+            alphabetContainer.appendChild(letterBlock);
+        }
+
+        // Event listener for key press
+        document.addEventListener('keydown', (event) => {
+            const pressedKey = event.key.toUpperCase();
+            const letterBlock = document.querySelector(`[data-letter="${pressedKey}"]`);
+            
+            if (letterBlock) {
+                letterBlock.classList.add('greyed-out');
+            }
+        });
+
+        // Reset button functionality
+        function resetKeys() {
+            const letterBlocks = document.querySelectorAll('.letter-block');
+            letterBlocks.forEach(block => {
+                block.classList.remove('greyed-out');
+            });
+        }
+    </script>
+</body>
+</html>
