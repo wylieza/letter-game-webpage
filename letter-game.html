@@ -124,12 +124,16 @@
 
         // Function to toggle letter based on shift key
         function toggleLetter(letterBlock, shiftKey) {
+            const isGreyedOut = letterBlock.classList.contains('greyed-out');
+            if (!isGreyedOut) {
+                resetTimer();
+            }
+
             if (shiftKey) {
                 toggleGreyedOut(letterBlock);
             } else {
                 letterBlock.classList.add('greyed-out');
             }
-            resetTimer();
         }
 
         // Function to start or restart the timer
