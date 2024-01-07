@@ -88,7 +88,7 @@
             // Add click event listener to each letter block
             letterBlock.addEventListener('click', () => {
                 if (!gameOver) {
-                    updateGame(letterBlock);
+                    toggleLetter(letterBlock);
                 }
             });
         }
@@ -100,7 +100,7 @@
                 const letterBlock = document.querySelector(`[data-letter="${pressedKey}"]`);
                 
                 if (letterBlock) {
-                    updateGame(letterBlock);
+                    toggleLetter(letterBlock, event.shiftKey);
                 }
             }
         });
@@ -122,9 +122,13 @@
             element.classList.toggle('greyed-out');
         }
 
-        // Function to update the game state
-        function updateGame(letterBlock) {
-            toggleGreyedOut(letterBlock);
+        // Function to toggle letter based on shift key
+        function toggleLetter(letterBlock, shiftKey) {
+            if (shiftKey) {
+                toggleGreyedOut(letterBlock);
+            } else {
+                letterBlock.classList.add('greyed-out');
+            }
             resetTimer();
         }
 
