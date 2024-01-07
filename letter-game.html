@@ -45,6 +45,7 @@
         }
     </style>
 </head>
+</head>
 <body>
     <div id="alphabet-container"></div>
     <button id="reset-btn" onclick="resetKeys()">Reset</button>
@@ -61,6 +62,11 @@
             letterBlock.innerText = letter;
             letterBlock.setAttribute('data-letter', letter);
             alphabetContainer.appendChild(letterBlock);
+
+            // Add click event listener to each letter block
+            letterBlock.addEventListener('click', () => {
+                toggleGreyedOut(letterBlock);
+            });
         }
 
         // Event listener for key press
@@ -69,7 +75,13 @@
             const letterBlock = document.querySelector(`[data-letter="${pressedKey}"]`);
             
             if (letterBlock) {
-                letterBlock.classList.add('greyed-out');
+                // Check if the Shift key is held down
+                if (event.shiftKey) {
+                    toggleGreyedOut(letterBlock);
+                } else {
+                    // Always set to greyed out if Shift key is not held down
+                    letterBlock.classList.add('greyed-out');
+                }
             }
         });
 
@@ -79,6 +91,11 @@
             letterBlocks.forEach(block => {
                 block.classList.remove('greyed-out');
             });
+        }
+
+        // Function to toggle greyed-out class
+        function toggleGreyedOut(element) {
+            element.classList.toggle('greyed-out');
         }
     </script>
 </body>
