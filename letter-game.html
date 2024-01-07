@@ -74,6 +74,7 @@
         const gameOverMessage = document.getElementById('game-over-message');
 
         let timer;
+        let gameOver = false;
 
         // Create letter blocks
         for (let i = 65; i <= 90; i++) {
@@ -86,17 +87,21 @@
 
             // Add click event listener to each letter block
             letterBlock.addEventListener('click', () => {
-                updateGame(letterBlock);
+                if (!gameOver) {
+                    updateGame(letterBlock);
+                }
             });
         }
 
         // Event listener for key press
         document.addEventListener('keydown', (event) => {
-            const pressedKey = event.key.toUpperCase();
-            const letterBlock = document.querySelector(`[data-letter="${pressedKey}"]`);
-            
-            if (letterBlock) {
-                updateGame(letterBlock);
+            if (!gameOver) {
+                const pressedKey = event.key.toUpperCase();
+                const letterBlock = document.querySelector(`[data-letter="${pressedKey}"]`);
+                
+                if (letterBlock) {
+                    updateGame(letterBlock);
+                }
             }
         });
 
@@ -109,6 +114,7 @@
 
             resetTimer();
             hideGameOverMessage();
+            gameOver = false;
         }
 
         // Function to toggle greyed-out class
@@ -150,6 +156,7 @@
 
         // Function to show "GAME OVER" message
         function showGameOverMessage() {
+            gameOver = true;
             gameOverMessage.style.display = 'block';
         }
 
